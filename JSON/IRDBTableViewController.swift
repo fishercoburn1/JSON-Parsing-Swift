@@ -24,7 +24,7 @@ class IRDBTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "IRDb"
+        title = "The real housewives"
             
         let nav = self.navigationController?.navigationBar
         
@@ -39,8 +39,8 @@ class IRDBTableViewController: UITableViewController {
         
         navigationItem.titleView = imageView
         
-        dataController.getJSONData(completion: {
-            dataModel in self.mediaModel = dataModel
+        dataController.getJSONData(completion: {dataModel in
+            self.mediaModel = dataModel
         })
     }
 
@@ -48,17 +48,17 @@ class IRDBTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return mediaModel?.franchise.count ?? 0
+        return mediaModel?.TVShows.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return mediaModel?.franchise[section].entries.count ?? 0
+        return mediaModel?.TVShows[section].show.count ?? 0
     }
 
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return mediaModel?.franchise[section].franchiseName
+        return mediaModel?.TVShows[section].location
     }
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,8 +66,8 @@ class IRDBTableViewController: UITableViewController {
 
         
         // Configure the cell...
-        cell.textLabel?.text = mediaModel?.franchise[indexPath.section].entries[indexPath.row].name
-        cell.detailTextLabel?.text = mediaModel?.franchise[indexPath.section].entries[indexPath.row].yearStart
+        cell.textLabel?.text = mediaModel?.TVShows[indexPath.section].show[indexPath.row].name
+        cell.detailTextLabel?.text = mediaModel?.TVShows[indexPath.section].show[indexPath.row].rate
         return cell
     }
    
@@ -79,7 +79,7 @@ class IRDBTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "showMediaDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let selectedObject = mediaModel!.franchise[indexPath.section].entries[indexPath.row]
+                let selectedObject = mediaModel!.TVShows[indexPath.section].show[indexPath.row]
                 let controller = segue.destination as! DetailViewController
                 controller.detailItem = selectedObject
                 

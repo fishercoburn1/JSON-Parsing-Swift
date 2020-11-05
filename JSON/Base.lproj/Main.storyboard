@@ -111,10 +111,10 @@
                     <connections>
                         <outlet property="descriptionTextView" destination="OaR-dO-H70" id="VDk-h6-o1A"/>
                         <outlet property="episodeLabel" destination="TDV-Vu-jWL" id="5ST-is-VhO"/>
-                        <outlet property="formatLabel" destination="7RF-3q-xVQ" id="3eh-yM-SKo"/>
+                        <outlet property="genresLabel" destination="tlg-yT-vWr" id="zPn-iL-l1o"/>
                         <outlet property="mediaImage" destination="8Ql-09-voU" id="gNy-ke-If3"/>
-                        <outlet property="studioLabel" destination="tlg-yT-vWr" id="yWv-gh-NOV"/>
-                        <outlet property="summaryLabel" destination="lMm-Gr-ff3" id="tFm-ZS-jHj"/>
+                        <outlet property="seasonsLabel" destination="7RF-3q-xVQ" id="IXB-Jc-nPM"/>
+                        <outlet property="storyDescriptionTextView" destination="lMm-Gr-ff3" id="c5u-hT-nRe"/>
                         <outlet property="titleLabel" destination="Y0t-bn-4Hb" id="jEb-H1-nq7"/>
                         <outlet property="yearLabel" destination="V07-ib-PHa" id="Zyg-BJ-XOe"/>
                     </connections>

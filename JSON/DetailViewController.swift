@@ -15,11 +15,14 @@ class DetailViewController: UIViewController {
     @IBOutlet var episodeLabel: UILabel!
     @IBOutlet var formatLabel: UILabel!
     @IBOutlet var studioLabel: UILabel!
+    @IBOutlet var seasonsLabel: UILabel!
     @IBOutlet var summaryLabel: UITextView!
     @IBOutlet var descriptionTextView: UILabel!
+    @IBOutlet var genresLabel: UILabel!
     
+    @IBOutlet weak var storyDescriptionTextView: UITextView!
     
-    var detailItem: Entry? {
+    var detailItem: Shows? {
         didSet {
             configureView()
         }
@@ -39,64 +42,63 @@ class DetailViewController: UIViewController {
     }
     
     func configureView() {
-        
         if let entry = detailItem {
-            
-            if let thisMediaImage = mediaImage {
-                //Add the image
-                
+            //For title
+            if let label = titleLabel{
+                label.text = entry.name
+            }
+            //For year
+            if let label = yearLabel {
+                if let ended = entry.yearEnd {
+                    label.text = "\(entry.yearStart) - \(ended)"
+                } else {
+                    label.text = entry.yearStart
+                }
+            }
+            //For seasons
+            if let label = seasonsLabel {
+                label.text = "\(entry.seasons) Seasons"
+            }
+            //For episodes
+            if let label = episodeLabel {
+                label.text = "\(entry.episodes ?? 0) Episodes"
+            }
+            //For genres
+            if let label = genresLabel {
+                label.text = entry.genres
+            }
+            //For description
+            if let label = descriptionTextView {
+                label.text = entry.description
+            }
+            //For story line
+            if let textView = storyDescriptionTextView {
+                textView.text = entry.longDesc
+            }
+            //For image
+            if let imageView = mediaImage {
                 let url = URL(string: entry.imageURL)
                 let data = try? Data(contentsOf: url!)
-                
-                thisMediaImage.image = UIImage(data: data!)
+                imageView.image = UIImage(data: data!)
             }
-            
-            if let thisTitleLabel = titleLabel {
-                thisTitleLabel.text = entry.name
-            }
-            if let thisYearLabel = yearLabel {
-                //Format the year here
-                thisYearLabel.text = entry.yearStart
-            }
-            if let thisFormatLabel = formatLabel {
-                thisFormatLabel.text = entry.format
-            }
-            if let thisEpisodeLabel = episodeLabel {
-                thisEpisodeLabel.text = " "
-                if let episodeCount = entry.episodes {
-                if(entry.episodes == 1) {
-                    thisEpisodeLabel.text = "\(episodeCount) Episode"
-                }
-                else {
-                    thisEpisodeLabel.text = "\(episodeCount) Episodes"
-                }
-                }
-            }
-            if let thisStudioLabel = studioLabel {
-                thisStudioLabel.text = entry.studio
-            }
-            
-            if let thisDescriptionTextView = descriptionTextView {
-                thisDescriptionTextView.text = entry.description
-            }
-            if let thisSummaryLabel = summaryLabel {
-                thisSummaryLabel.text = entry.summary
-            }
-            
         }
     }
     
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+
         if segue.identifier == "showCastList" {
-                
             let controller = segue.destination as! CastTableViewController
-            controller.castListArray = detailItem?.starring
-                
-                
+            if let castArrayList = detailItem?.castSummary {
+                controller.castListArray = castArrayList
             }
         }
+    }
+
     }
 
 
